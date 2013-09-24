@@ -76,7 +76,7 @@ We need an icon!
 Immediate things to fix/improve:
 
   * optional long loop detection/cancellation (via syntax tree modification)
-  * typing a command into the console causes something funky to happen with the `setup()`/`loop()` stuff - must investigate further.
+  * <del>typing a command into the console causes something funky to happen with the `setup()`/`loop()` stuff - must investigate further.</del>
   * <del>animation is SLOW. must switch to requestAnimationFrame().</del>
   * <del>fix issue where toolbar disappears after opening a file</del>
 
