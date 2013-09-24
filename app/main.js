@@ -183,7 +183,7 @@ function setupMenus() {
 }
 
 function serialize(s) {
-    return JSON.stringify(s);
+    return JSON.stringify(s, null, 4);
 }
 
 function deserialize(s) {
