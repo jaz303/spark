@@ -1,6 +1,8 @@
 var vm = require('vm');
 var signal = require('signalkit');
 
+// these functions are changed back into source code via
+// Function.prototype.toString and then injected into the sandbox.
 var builtins = {
     __makeInjector__: function() {
         var global = this;
@@ -30,6 +32,15 @@ var builtins = {
                 } catch (e) {
                     __error__('setup', e);
                 }
+            }
+        });
+
+        // yo dawg etc
+        __export__('eval', function(code) {
+            try {
+                return eval(code);
+            } catch (e) {
+                __error__('eval', e);
             }
         });
     }

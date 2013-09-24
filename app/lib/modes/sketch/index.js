@@ -147,7 +147,7 @@ module.exports = Mode.extend(function(_cs, _cb) {
 
                 this._console.setEvaluator(function(cmd, console) {
                     console.notReady();
-                    var result = self._ctx.evaluate(cmd);
+                    var result = self._ctx.__js_eval(cmd);
                     console.printObject(result);
                     console.ready();
                 });
