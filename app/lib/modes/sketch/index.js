@@ -228,12 +228,19 @@ module.exports = Mode.extend(function(_cs, _cb) {
 
             getState: function() {
                 return {
-                    code: this._editor.getValue()
+                    code: this._editor.getValue().split("\n")
                 };
             },
 
             setState: function(state) {
-                this._editor.setValue(state.code || '');
+
+                var code = state.code;
+                if (Array.isArray(code)) {
+                    code = code.join("\n");
+                }
+
+                this._editor.setValue(code || '');
+            
             }
 
         }
