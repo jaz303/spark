@@ -163,8 +163,7 @@ module.exports = Mode.extend(function(_cs, _cb) {
                 // State
 
                 this._running = false;
-                this._timer = null;
-
+                
                 //
                 // And away we go...
 
@@ -184,11 +183,19 @@ module.exports = Mode.extend(function(_cs, _cb) {
 
                 this._running = true;
 
-                var ctx = this._ctx;
+                var self = this,
+                    ctx = this._ctx;
 
-                this._timer = setInterval(function() {
+                window.requestAnimationFrame(function tick() {
+                    
+                    if (!self._running)
+                        return;
+                    
                     ctx.__js_loop();
-                }, 1000 / 60);
+                
+                    window.requestAnimationFrame(tick);
+
+                });
 
             },
 
@@ -197,10 +204,8 @@ module.exports = Mode.extend(function(_cs, _cb) {
                 if (!this._running)
                     return;
 
-                clearInterval(this._timer);
                 this._running = false;
-                this._timer = null;
-            
+                
             },
 
             reset: function() {
