@@ -186,10 +186,21 @@ module.exports = Mode.extend(function(_cs, _cb) {
                 var self = this,
                     ctx = this._ctx;
 
+                // var lastSecond = Date.now(),
+                //     frameCount = 0;
+
                 window.requestAnimationFrame(function tick() {
                     
                     if (!self._running)
                         return;
+
+                    // frameCount++;
+                    // var now = Date.now();
+                    // if (now - lastSecond > 1000) {
+                    //     console.log("FPS: " + frameCount);
+                    //     lastSecond = now;
+                    //     frameCount = 0;
+                    // }
                     
                     ctx.__js_loop();
                 
