@@ -1,0 +1,442 @@
+@import 'reset';
+@import 'theme';
+
+//
+// Mixins
+
+@mixin noselect {
+    -webkit-user-select: none;
+    cursor: default;
+}
+
+@mixin small-text {
+    font-size: 11px;
+}
+
+@mixin control-font {
+    font: $HK_CONTROL_FONT_SIZE $HK_CONTROL_FONT;
+    line-height: 1;
+}
+
+@mixin control-border {
+    border: 1px solid HK_CONTROL_BORDER_COLOR;
+}
+
+//
+// Root
+
+.hk {
+    @include noselect;
+    
+    background: #101010;
+    
+    font: 12px Arial, Helvetica, sans-serif;
+    
+    a {
+        text-decoration: none;
+    }
+    
+    * {
+        @include noselect;
+    }
+}
+
+//
+//
+
+.hk-menu-bar {
+    @include small-text;
+    
+    background: #202020;
+    padding: 7px;
+    > a {
+        display: inline-block;
+        color: white;
+        margin-right: 5px;
+        padding: 3px 5px;
+        border-radius: 3px;
+        &:hover {
+            background: #606060;
+        }
+    }
+}
+
+.hk-menu {
+    position: absolute;
+}
+
+.hk-menu-action-item {
+    display: block;
+}
+
+
+//
+// Capture Overlay
+
+.hk-capture-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 30000;
+}
+
+//
+// Widget
+
+.hk-widget {
+    position: absolute;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+//
+// Button
+
+.hk-button {
+  @include control-font;
+  @include control-border;
+  background: $HK_BUTTON_BG_COLOR;
+  color: $HK_TEXT_COLOR;
+  padding: 1px 10px 2px 10px;
+  border-radius: 7px;
+  
+  &.disabled {
+      color: #d0d0d0;
+  }
+  
+  &:not(.disabled):active {
+    background: $HK_CONTROL_ACTIVE_BG_COLOR;
+  }
+}
+
+//
+// Canvas
+
+.hk-canvas-2d {
+    background-color: #121212;
+    border-radius: $HK_BLOCK_BORDER_RADIUS;
+    
+    &:focus {
+        outline: none;
+    }
+}
+
+//
+// Code Editor
+
+.hk-code-editor * {
+    -webkit-user-select: auto;
+}
+
+.hk-code-editor {
+    background: #00122A;
+    border-radius: $HK_BLOCK_BORDER_RADIUS;
+    
+    .ace_editor {
+        font-family: $HK_MONOSPACE_FONT ;
+        font-size: 12px;
+    }
+    
+    ::-webkit-scrollbar {
+        background: #012042;
+        width: 15px;
+        height: 15px;
+    }
+    
+    ::-webkit-scrollbar-button { }
+    
+    ::-webkit-scrollbar-track { }
+    ::-webkit-scrollbar-track:horizontal { border-top: 1px solid #01324B; }
+    ::-webkit-scrollbar-track:vertical { border-left: 1px solid #01324B; }
+    
+    ::-webkit-scrollbar-track-piece:start { }
+    
+    ::-webkit-scrollbar-thumb:vertical {
+        background: url("thumb-v.png") repeat-y center center;
+        border-radius: 10px;
+        -webkit-background-clip: padding-box;
+    }
+    
+    ::-webkit-scrollbar-thumb:horizontal {
+        background: url("thumb-h.png") repeat-x center center;
+        border-radius: 10px;
+        -webkit-background-clip: padding-box;
+    }
+    
+    ::-webkit-scrollbar-corner {
+        
+    }
+}
+
+//
+// Console
+
+.hk-console {
+    padding: 5px;
+    background: #AAB2B7;
+    border-radius: $HK_BLOCK_BORDER_RADIUS;
+    overflow: auto;
+    font: $HK_CONSOLE_FONT_SIZE/1.2 $HK_MONOSPACE_FONT;
+    
+    output {
+        
+    }
+    
+    .output-item {
+        display: -webkit-box;
+        -webkit-box-orient: horizontal;
+        -webkit-box-align: stretch;
+        clear: both;
+    }
+    
+    .input-line {
+        
+    }
+    
+    .prompt {
+        white-space: nowrap;
+        margin-right: 5px;
+        display: -webkit-box;
+        -webkit-box-back: center;
+        -webkit-box-orient: vertical;
+    }
+    
+    .command-wrapper {
+        display: block;
+        -webkit-box-flex: 1;
+    }
+    
+    span.command {
+        display: inline-block;
+    }
+    
+    input.command {
+        border: none;
+        background: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        font: inherit;
+        -webkit-appearance: textfield;
+        -webkit-user-select: text;
+        cursor: auto;
+        display: inline-block;
+        text-align: start;
+        
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+//
+// Dialog
+
+.hk-dialog {
+    background: #303030;
+    border-radius: $HK_DIALOG_BORDER_RADIUS;
+    position: absolute;
+    overflow: hidden;
+    
+    -webkit-transition-property: opacity, -webkit-transform;
+    -webkit-transition-duration: 0.2s, 0.2s;
+    -webkit-transform: translateZ(0);
+    
+    &.active-dragging { opacity: 0.6; }
+    &.hiding { opacity: 0; -webkit-transform: translateZ(0) scale(0.8); }
+    &.hidden { display: none; }
+    
+    > .hk-dialog-header {
+        position: absolute;
+        top: $HK_DIALOG_PADDING;
+        left: $HK_DIALOG_PADDING;
+        right: $HK_DIALOG_PADDING;
+        height: $HK_DIALOG_HEADER_HEIGHT;
+        background: #a0a0a0;
+        border-radius: $HK_DIALOG_BORDER_RADIUS;
+        cursor: move;
+        overflow: hidden;
+        
+        > .hk-dialog-title {
+            display: block;
+            padding: $HK_DIALOG_PADDING;
+            font-size: ($HK_DIALOG_HEADER_HEIGHT - (2 * $HK_DIALOG_PADDING));
+            line-height: 1;
+            cursor: move;
+        }
+        
+        > .hk-dialog-close {
+            position: absolute;
+            right: 20px;
+            top: 4px;
+            cursor: pointer;
+            &:after { content: "[X]"; }
+        }
+        
+        > .hk-dialog-shade {
+            position: absolute;
+            right: 40px;
+            top: 4px;
+            cursor: pointer;
+            &:after { content: "[S]"; }
+        }
+    }
+    
+    > .hk-dialog-content {
+        position: absolute;
+        border-radius: $HK_DIALOG_BORDER_RADIUS ;
+    }
+    
+    > .hk-dialog-resize-horizontal {
+        position: absolute;
+        top: $HK_DIALOG_PADDING;
+        right: 0;
+        bottom: $HK_DIALOG_PADDING;
+        width: $HK_DIALOG_PADDING;
+        cursor: e-resize;
+    }
+    
+    > .hk-dialog-resize-vertical {
+        position: absolute;
+        left: $HK_DIALOG_PADDING;
+        right: $HK_DIALOG_PADDING;
+        bottom: 0;
+        height: $HK_DIALOG_PADDING;
+        cursor: s-resize;
+    }
+    
+    > .hk-dialog-resize-any {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: $HK_DIALOG_PADDING;
+        height: $HK_DIALOG_PADDING;
+        cursor: se-resize;
+    }
+    
+    > .hk-dialog-resize-horizontal,
+    > .hk-dialog-resize-vertical,
+    > .hk-dialog-resize-any {
+        display: none;
+    }
+    
+    &.hk-dialog-resizable-horizontal > .hk-dialog-resize-horizontal,
+    &.hk-dialog-resizable-vertical > .hk-dialog-resize-vertical,
+    &.hk-dialog-resizable-any > .hk-dialog-resize-any { display: block; }
+    
+}
+
+//
+// Root Pane
+
+.hk-root-pane {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: $HK_ROOT_BG_COLOR;
+}
+
+//
+// Split Pane
+
+.hk-split-pane {
+    > .hk-split-pane-divider {
+        position: absolute;
+        background: $HK_ROOT_BG_COLOR;
+    }
+    
+    > .hk-split-pane-ghost {
+        background: #ff3300;
+        opacity: 0.7;
+    }
+    
+    &.horizontal > .hk-split-pane-divider {
+        left: 0;
+        right: 0;
+        height: $HK_SPLIT_PANE_DIVIDER_SIZE;
+        cursor: row-resize;
+    }
+    
+    &.vertical > .hk-split-pane-divider {
+        top: 0;
+        bottom: 0;
+        width: $HK_SPLIT_PANE_DIVIDER_SIZE;
+        cursor: col-resize;
+    }
+}
+
+//
+// Tab Pane
+
+.hk-tab-pane {
+    .hk-tab-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: $HK_TAB_HEIGHT;
+        
+        > a {
+          @include control-font;
+          
+          background: $HK_TAB_BACKGROUND_COLOR;
+          display: block;
+          float: left;
+          margin-right: $HK_TAB_SPACING;
+          color: $HK_TEXT_COLOR;
+          text-decoration: none;
+          font-weight: bold;
+          padding: $HK_TAB_PADDING;
+          border-radius: $HK_TAB_BORDER_RADIUS;
+          min-width: 30px;
+          text-align: center;
+          
+         &.active {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+        }
+    }
+    
+    .hk-tab-container {
+        position: absolute;
+        top: $HK_TAB_HEIGHT + $HK_TAB_SPACING;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: $HK_TAB_BACKGROUND_COLOR;
+        border-radius: 8px;
+    }
+    
+    .hk-tab-canvas {
+        position: absolute;
+    }
+}
+
+//
+// Toolbar
+
+.hk-toolbar {
+    
+}
+
+.hk-toolbar-items {
+    &.hk-toolbar-items-left { float: left; }
+    &.hk-toolbar-items-right { float: right; }
+    
+    > .hk-toolbar-item {
+        margin-right: 2px;
+        display: block;
+        float: left;
+    }
+    
+    > .hk-button {
+        border: 1px solid $HK_TOOLBAR_ITEM_BORDER_COLOR;
+        border-radius: 0;
+        padding: ((($HK_TOOLBAR_HEIGHT - $HK_CONTROL_FONT_SIZE) / 2) - 1) 3px;
+    }
+}

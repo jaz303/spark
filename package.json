@@ -1,0 +1,25 @@
+{
+  "name": "spark",
+  "version": "0.0.1",
+  "description": "A learning thing",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "Jason Frame <jason@onehackoranother.com> (http://jasonframe.co.uk)",
+  "license": "MIT",
+  "dependencies": {
+    "signalkit": "~0.2.3",
+    "classkit": "~0.1.0",
+    "hudkit": "0.0.2"
+  },
+  "window": {
+    "title": "Spark",
+    "toolbar": true,
+    "frame": true,
+    "width": 1024,
+    "height": 768,
+    "position": "mouse"
+  }
+}

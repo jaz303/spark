@@ -1,0 +1,319 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+.hk {
+  -webkit-user-select: none;
+  cursor: default;
+  background: #101010;
+  font: 12px Arial, Helvetica, sans-serif; }
+  .hk a {
+    text-decoration: none; }
+  .hk * {
+    -webkit-user-select: none;
+    cursor: default; }
+
+.hk-menu-bar {
+  font-size: 11px;
+  background: #202020;
+  padding: 7px; }
+  .hk-menu-bar > a {
+    display: inline-block;
+    color: white;
+    margin-right: 5px;
+    padding: 3px 5px;
+    border-radius: 3px; }
+    .hk-menu-bar > a:hover {
+      background: #606060; }
+
+.hk-menu {
+  position: absolute; }
+
+.hk-menu-action-item {
+  display: block; }
+
+.hk-capture-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 30000; }
+
+.hk-widget {
+  position: absolute;
+  overflow: hidden;
+  box-sizing: border-box; }
+
+.hk-button {
+  font: 10px Helvetica, sans-serif;
+  line-height: 1;
+  border: 1px solid HK_CONTROL_BORDER_COLOR;
+  background: #929da8;
+  color: #121729;
+  padding: 1px 10px 2px 10px;
+  border-radius: 7px; }
+  .hk-button.disabled {
+    color: #d0d0d0; }
+  .hk-button:not(.disabled):active {
+    background: #eaf20f; }
+
+.hk-canvas-2d {
+  background-color: #121212;
+  border-radius: 10px; }
+  .hk-canvas-2d:focus {
+    outline: none; }
+
+.hk-code-editor * {
+  -webkit-user-select: auto; }
+
+.hk-code-editor {
+  background: #00122A;
+  border-radius: 10px; }
+  .hk-code-editor .ace_editor {
+    font-family: Menlo, Monaco, "Liberation Mono", monospace;
+    font-size: 12px; }
+  .hk-code-editor ::-webkit-scrollbar {
+    background: #012042;
+    width: 15px;
+    height: 15px; }
+  .hk-code-editor ::-webkit-scrollbar-track:horizontal {
+    border-top: 1px solid #01324B; }
+  .hk-code-editor ::-webkit-scrollbar-track:vertical {
+    border-left: 1px solid #01324B; }
+  .hk-code-editor ::-webkit-scrollbar-thumb:vertical {
+    background: url("thumb-v.png") repeat-y center center;
+    border-radius: 10px;
+    -webkit-background-clip: padding-box; }
+  .hk-code-editor ::-webkit-scrollbar-thumb:horizontal {
+    background: url("thumb-h.png") repeat-x center center;
+    border-radius: 10px;
+    -webkit-background-clip: padding-box; }
+
+.hk-console {
+  padding: 5px;
+  background: #AAB2B7;
+  border-radius: 10px;
+  overflow: auto;
+  font: 10.83333px Menlo, Monaco, "Liberation Mono", monospace; }
+  .hk-console .output-item {
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-align: stretch;
+    clear: both; }
+  .hk-console .prompt {
+    white-space: nowrap;
+    margin-right: 5px;
+    display: -webkit-box;
+    -webkit-box-back: center;
+    -webkit-box-orient: vertical; }
+  .hk-console .command-wrapper {
+    display: block;
+    -webkit-box-flex: 1; }
+  .hk-console span.command {
+    display: inline-block; }
+  .hk-console input.command {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    font: inherit;
+    -webkit-appearance: textfield;
+    -webkit-user-select: text;
+    cursor: auto;
+    display: inline-block;
+    text-align: start; }
+    .hk-console input.command:focus {
+      outline: none; }
+
+.hk-dialog {
+  background: #303030;
+  border-radius: 6px;
+  position: absolute;
+  overflow: hidden;
+  -webkit-transition-property: opacity, -webkit-transform;
+  -webkit-transition-duration: 0.2s, 0.2s;
+  -webkit-transform: translateZ(0); }
+  .hk-dialog.active-dragging {
+    opacity: 0.6; }
+  .hk-dialog.hiding {
+    opacity: 0;
+    -webkit-transform: translateZ(0) scale(0.8); }
+  .hk-dialog.hidden {
+    display: none; }
+  .hk-dialog > .hk-dialog-header {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    height: 24px;
+    background: #a0a0a0;
+    border-radius: 6px;
+    cursor: move;
+    overflow: hidden; }
+    .hk-dialog > .hk-dialog-header > .hk-dialog-title {
+      display: block;
+      padding: 6px;
+      font-size: 12px;
+      line-height: 1;
+      cursor: move; }
+    .hk-dialog > .hk-dialog-header > .hk-dialog-close {
+      position: absolute;
+      right: 20px;
+      top: 4px;
+      cursor: pointer; }
+      .hk-dialog > .hk-dialog-header > .hk-dialog-close:after {
+        content: "[X]"; }
+    .hk-dialog > .hk-dialog-header > .hk-dialog-shade {
+      position: absolute;
+      right: 40px;
+      top: 4px;
+      cursor: pointer; }
+      .hk-dialog > .hk-dialog-header > .hk-dialog-shade:after {
+        content: "[S]"; }
+  .hk-dialog > .hk-dialog-content {
+    position: absolute;
+    border-radius: 6px; }
+  .hk-dialog > .hk-dialog-resize-horizontal {
+    position: absolute;
+    top: 6px;
+    right: 0;
+    bottom: 6px;
+    width: 6px;
+    cursor: e-resize; }
+  .hk-dialog > .hk-dialog-resize-vertical {
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    bottom: 0;
+    height: 6px;
+    cursor: s-resize; }
+  .hk-dialog > .hk-dialog-resize-any {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 6px;
+    height: 6px;
+    cursor: se-resize; }
+  .hk-dialog > .hk-dialog-resize-horizontal,
+  .hk-dialog > .hk-dialog-resize-vertical,
+  .hk-dialog > .hk-dialog-resize-any {
+    display: none; }
+  .hk-dialog.hk-dialog-resizable-horizontal > .hk-dialog-resize-horizontal, .hk-dialog.hk-dialog-resizable-vertical > .hk-dialog-resize-vertical, .hk-dialog.hk-dialog-resizable-any > .hk-dialog-resize-any {
+    display: block; }
+
+.hk-root-pane {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  background-color: #181e23; }
+
+.hk-split-pane > .hk-split-pane-divider {
+  position: absolute;
+  background: #181e23; }
+.hk-split-pane > .hk-split-pane-ghost {
+  background: #ff3300;
+  opacity: 0.7; }
+.hk-split-pane.horizontal > .hk-split-pane-divider {
+  left: 0;
+  right: 0;
+  height: 8px;
+  cursor: row-resize; }
+.hk-split-pane.vertical > .hk-split-pane-divider {
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  cursor: col-resize; }
+
+.hk-tab-pane .hk-tab-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 24px; }
+  .hk-tab-pane .hk-tab-bar > a {
+    font: 10px Helvetica, sans-serif;
+    line-height: 1;
+    background: #67748c;
+    display: block;
+    float: left;
+    margin-right: 7px;
+    color: #121729;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 7px;
+    border-radius: 5px;
+    min-width: 30px;
+    text-align: center; }
+    .hk-tab-pane .hk-tab-bar > a.active {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0; }
+.hk-tab-pane .hk-tab-container {
+  position: absolute;
+  top: 31px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #67748c;
+  border-radius: 8px; }
+.hk-tab-pane .hk-tab-canvas {
+  position: absolute; }
+
+.hk-toolbar-items.hk-toolbar-items-left {
+  float: left; }
+.hk-toolbar-items.hk-toolbar-items-right {
+  float: right; }
+.hk-toolbar-items > .hk-toolbar-item {
+  margin-right: 2px;
+  display: block;
+  float: left; }
+.hk-toolbar-items > .hk-button {
+  border: 1px solid #a6b5bb;
+  border-radius: 0;
+  padding: 3px 3px; }
