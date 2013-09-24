@@ -1,10 +1,14 @@
 # spark
 
-Spark is an instant-feedback sketch coding environment for Javascript that has been heavily inspired by Processing. It was designed for use in a classroom environment, the idea being that students would code along with the lesson content, immediately seeing the results of their changes.
+Spark is an instant-feedback sketch coding environment for Javascript that has been heavily inspired by Processing. It was designed for use in the classroom, the core idea being that students should code along during each lesson and benefit from the ability to immediately try out new material and experiment with the effects of small changes.
 
 Here's a screenshot:
 
 <img src="https://raw.github.com/jaz303/spark/master/screenshot.jpg">
+
+## Obligatory
+
+Alpha software! Dungeons! Dragons! Raaaaaa!
 
 ## Usage Notes
 
@@ -75,7 +79,7 @@ Immediate things to fix/improve:
   * typing a command into the console causes something funky to happen with the `setup()`/`loop()` stuff - must investigate further.
   * animation is SLOW. must switch to requestAnimationFrame().
 
-Beyond this, there are a ton of other more interesting features planned; this early beta is just laying the groundwork for some much more awesome features.
+Beyond this, there are a ton of other more interesting features planned; this early demo is just laying the groundwork for some much more interesting/awesome features.
 
 ## Author & License
 
