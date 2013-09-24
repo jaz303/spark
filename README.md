@@ -1,5 +1,7 @@
 # spark!
 
+<img src="https://raw.github.com/jaz303/spark/master/screenshot.jpg">
+
 ## Usage Notes
 
 Use `Cmd + Enter` on Mac (or `Ctrl + Enter` on Windows) to evaluate either the current selection, or all code (if none is selected).
@@ -16,7 +18,7 @@ There are a bunch of other Processing-style functions added to sandbox context. 
 
 ## Download
 
-    * [Mac] (http://jasonframe.co.uk/teaching/gsa-dc/Spark.zip)
+  * [Mac](http://jasonframe.co.uk/teaching/gsa-dc/Spark.zip)
 
 ## Hacking
 
@@ -41,9 +43,9 @@ Packaging is only supported on Mac for now - if you have some spare time scripts
 
 ### Mac
 
-    * Download a version of `node-webkit` and move its `.app` file to the `res` directory underneath the Spark project root. The version I am currently using is [toxygen's 10.6-compatible build](https://github.com/toxygen/10.6-node-webkit).
-    * Then in the shell: `$ make clean osx`
-    * Packaged app version should be in the `pkg` dir.
+  * Download a version of `node-webkit` and move its `.app` file to the `res` directory underneath the Spark project root. The version I am currently using is [toxygen's 10.6-compatible build](https://github.com/toxygen/10.6-node-webkit).
+  * Then in the shell: `$ make clean osx`
+  * Packaged app version should be in the `pkg` dir.
 
 ## Contribute
 
@@ -65,9 +67,9 @@ We need an icon!
 
 Immediate things to fix/improve:
 
-    * optional long loop detection/cancellation (via syntax tree modification)
-    * typing a command into the console causes something funky to happen with the `setup()`/`loop()` stuff - must investigate further.
-    * animation is SLOW. must switch to requestAnimationFrame().
+  * optional long loop detection/cancellation (via syntax tree modification)
+  * typing a command into the console causes something funky to happen with the `setup()`/`loop()` stuff - must investigate further.
+  * animation is SLOW. must switch to requestAnimationFrame().
 
 ## Author & License
 
