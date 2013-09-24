@@ -197,9 +197,9 @@ function teardownActiveProject() {
 
     activeMode.teardown();
 
-    rootPane.hideToolbar();
-    rootPane.setToolbar(null);
     rootPane.setRootWidget(null);
+    rootPane.setToolbar(null);
+    rootPane.showToolbar();
 
 }
 
