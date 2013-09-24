@@ -7,7 +7,9 @@ var CanvasAPI   = lib('apis/canvas'),
     ColorsAPI   = lib('apis/colors'),
     StringAPI   = lib('apis/string');
 
-var hk = require('hudkit');
+var hk          = require('hudkit'),
+    esprima     = require('esprima'),
+    escodegen   = require('escodegen');
 
 module.exports = Mode.extend(function(_cs, _cb) {
 
@@ -94,12 +96,81 @@ module.exports = Mode.extend(function(_cs, _cb) {
                     name: "eval",
                     bindKey: {win: "Ctrl-Enter", mac: "Command-Enter"},
                     exec: function(editor) {
-                        
-                        var code;
+
+                        var code = null, setup = false;
+
                         if (editor.getSelectionRange().isEmpty()) {
                             code = editor.getValue();
+                            setup = true; // if we're re-eval'ing all the code, run setup too
                         } else {
                             code = editor.getCopyText();
+                        }
+
+                        try {
+
+                            console.log("PARSE...");
+
+                            var nextTimerId = 1;
+                            
+                            function walk(node) {
+
+                                if (!node.body)
+                                    return;
+
+                                var body = node.body;
+                                if (body.type === 'BlockStatement')
+                                    body = body.body;
+
+                                for (var i = 0, l = body.length; i < l; ++i) {
+                                    var child = body[i];
+                                    if (child.type === 'WhileStatement') {
+
+                                        var timerId     = nextTimerId++,
+                                            timerName   = '$__sparkWhileTimer__' + timerId,
+                                            counterName = '$__sparkWhileCounter__' + timerId;
+
+                                        //
+                                        // Set up the timer
+
+                                        var timerSetup = {
+                                            type: 'DirectiveStatement',
+                                            raw: "var " + timerName + " = Date.now(), " + counterName + " = 0"
+                                        };
+
+                                        body.splice(i, 0, timerSetup);
+                                        i++;
+
+                                        //
+                                        // Set up the check
+
+                                        var timerCheck = {
+                                            type: 'DirectiveStatement',
+                                            raw: [
+                                                "if ((" + counterName + "++) & 1024) {",
+                                                "  if ((Date.now() - " + timerName + ") > 5000) throw new Error('---TOOSLOW---');",
+                                                "}"
+                                            ].join("\n")
+                                        };
+
+                                        child.body.body.push(timerCheck);
+                                    
+                                    }
+                                    walk(child);
+                                }
+
+                            }
+
+                            var ast = esprima.parse(code);
+                            walk(ast);
+
+                            console.log(escodegen.generate(ast));
+
+                            code = escodegen.generate(ast);
+
+                        } catch (e) {
+                            console.log(e);
+                            // Parse failed.
+                            // We'll just ignore this and let the runtime throw the error.
                         }
                         
                         var result = self._ctx.evaluate(code);
@@ -108,7 +179,9 @@ module.exports = Mode.extend(function(_cs, _cb) {
                         } else {
                             // TODO: this is a work-around for not have global
                             // variable extraction/injection.
-                            self._ctx.__js_setup();
+                            if (setup) {
+                                self._ctx.__js_setup();    
+                            }
                         }
                     
                     }
