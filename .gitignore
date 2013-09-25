@@ -1,3 +1,4 @@
 pkg
 res
 node_modules
+.DS_Store
