@@ -259,9 +259,7 @@ module.exports = Mode.extend(function(_cs, _cb) {
                             var ast = esprima.parse(code);
                             walkList(ast.body);
 
-                            //console.log(escodegen.generate(ast))
-
-                            code = escodegen.generate(ast);
+                            // code = escodegen.generate(ast);
 
                         } catch (e) {
                             console.log(e);
