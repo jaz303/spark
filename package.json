@@ -1,12 +1,12 @@
 {
-  "name": "spark",
-  "version": "0.0.1",
-  "description": "A learning thing",
+  "name": "sparkjs",
+  "version": "0.1.0",
+  "description": "Javascript sketch-coding environment. Processing with a REPL!",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "",
+  "repository": "git://github.com/jaz303/spark.git",
   "author": "Jason Frame <jason@onehackoranother.com> (http://jasonframe.co.uk)",
   "license": "MIT",
   "dependencies": {
