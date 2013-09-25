@@ -12,7 +12,7 @@
   "dependencies": {
     "signalkit": "~0.2.3",
     "classkit": "~0.1.0",
-    "hudkit": "0.0.2",
+    "hudkit": "0.0.5",
     "esprima": "~1.0.4",
     "escodegen": "0.0.27"
   },
