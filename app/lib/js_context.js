@@ -129,7 +129,8 @@ JSContext.prototype.evaluate = function(code) {
     try {
         return vm.runInContext(code, this._ctx);
     } catch (e) {
-        return e;
+        this.onerror.emit('evaluate', e);
+        return undefined;
     }
 }
 
