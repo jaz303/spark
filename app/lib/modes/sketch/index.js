@@ -108,62 +108,125 @@ module.exports = Mode.extend(function(_cs, _cb) {
 
                         try {
 
-                            console.log("PARSE...");
-
                             var nextTimerId = 1;
-                            
-                            function walk(node) {
 
-                                if (!node.body)
-                                    return;
+                            function isLoop(node) {
+                                return node.type === 'WhileStatement'
+                                        || node.type === 'ForStatement'
+                                        || node.type === 'ForInStatement'
+                                        || node.type === 'DoWhileStatement';
+                            }
 
-                                var body = node.body;
-                                if (body.type === 'BlockStatement')
-                                    body = body.body;
+                            function generateSetupCode(timerName, counterName) {
+                                return {
+                                    type: 'DirectiveStatement',
+                                    raw: "var " + timerName + " = Date.now(), " + counterName + " = 0"
+                                };
+                            }
 
-                                for (var i = 0, l = body.length; i < l; ++i) {
-                                    var child = body[i];
-                                    if (child.type === 'WhileStatement') {
+                            function modifyLoopBody(node, timerName, counterName) {
 
+                                var timerCheck = {
+                                    type: 'DirectiveStatement',
+                                    raw: [
+                                        "if ((" + counterName + "++) & 1024) {",
+                                        "  if ((Date.now() - " + timerName + ") > 5000) throw new Error('---TOOSLOW---');",
+                                        "}"
+                                    ].join("\n")
+                                };
+
+                                if (node.body.type === 'BlockStatement') {
+                                    node.body.body.push(timerCheck);
+                                } else {
+                                    node.body = {
+                                        type: 'BlockStatement',
+                                        body: [ node.body, timerCheck ]
+                                    }
+                                }
+
+                            }
+
+                            function walkList(ary) {
+                                for (var i = 0, l = ary.length; i < l; ++i) {
+                                    var child = ary[i];
+                                    if (isLoop(child)) {
                                         var timerId     = nextTimerId++,
                                             timerName   = '$__sparkWhileTimer__' + timerId,
                                             counterName = '$__sparkWhileCounter__' + timerId;
 
-                                        //
-                                        // Set up the timer
-
-                                        var timerSetup = {
-                                            type: 'DirectiveStatement',
-                                            raw: "var " + timerName + " = Date.now(), " + counterName + " = 0"
-                                        };
-
-                                        body.splice(i, 0, timerSetup);
+                                        ary.splice(i, 0, generateSetupCode(timerName, counterName));
                                         i++;
 
-                                        //
-                                        // Set up the check
-
-                                        var timerCheck = {
-                                            type: 'DirectiveStatement',
-                                            raw: [
-                                                "if ((" + counterName + "++) & 1024) {",
-                                                "  if ((Date.now() - " + timerName + ") > 5000) throw new Error('---TOOSLOW---');",
-                                                "}"
-                                            ].join("\n")
-                                        };
-
-                                        child.body.body.push(timerCheck);
-                                    
+                                        modifyLoopBody(child, timerName, counterName);
                                     }
                                     walk(child);
+                                }
+                            }
+
+                            function walkNodeWithBody(node, k) {
+                                if (isLoop(node[k])) {
+
+                                    var timerId     = nextTimerId++,
+                                        timerName   = '$__sparkWhileTimer__' + timerId,
+                                        counterName = '$__sparkWhileCounter__' + timerId;
+
+                                    var block = {
+                                        type: 'BlockStatement',
+                                        body: [
+                                            generateSetupCode(timerName, counterName),
+                                            node[k]
+                                        ]
+                                    };
+
+                                    modifyLoopBody(node.body.body, timerName, counterName);
+
+                                    node[k] = block;
+
+                                    walk(node[k].body[1]);
+
+                                } else {
+                                    walk(node[k]);    
+                                }
+                            }
+
+                            function walk(node) {
+                                switch (node.type) {
+                                    case 'ForStatement':
+                                    case 'ForInStatement':
+                                    case 'WhileStatement':
+                                    case 'DoWhileStatement':
+                                    case 'WithStatement':
+                                    case 'FunctionExpression':
+                                    case 'FunctionDeclaration':
+                                    case 'IfStatement':
+                                        if (node.type === 'IfStatement') {
+                                            walkNodeWithBody(node, 'consequent');
+                                            if (node.alternate) {
+                                                walkNodeWithBody(node, 'alternate');    
+                                            }
+                                        } else {
+                                            walkNodeWithBody(node, 'body');
+                                        }
+                                        break;
+                                    case 'BlockStatement':
+                                        walkList(node.body);
+                                        break;
+                                    case 'SwitchCase':
+                                        walkList(node.consequent);
+                                        break;
+                                    case 'TryStatement':
+                                        // TODO!!!
+                                        break;
+                                    default:
+                                        // do nothing
                                 }
 
                             }
 
                             var ast = esprima.parse(code);
-                            walk(ast);
+                            walkList(ast.body);
 
-                            console.log(escodegen.generate(ast));
+                            //console.log(escodegen.generate(ast))
 
                             code = escodegen.generate(ast);
 
