@@ -362,6 +362,10 @@ module.exports = API.extend(function(_sc, _sm) {
                 c.getter('height',  function() { return canvas.height; });
                 c.getter('ctx',     function() { return ctx; });
 
+                c.constant('LEFT_BUTTON', 1);
+                c.constant('MIDDLE_BUTTON', 2);
+                c.constant('RIGHT_BUTTON', 3);
+
             }
         }
 
