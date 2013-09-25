@@ -229,6 +229,7 @@ module.exports = Mode.extend(function(_cs, _cb) {
                 // Error reporting
 
                 this._ctx.onerror.connect(function(source, err) {
+                    self.stop();
                     self._console.printObject(err);
                 });
 
