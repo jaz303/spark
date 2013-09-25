@@ -35,6 +35,48 @@ var builtins = {
             }
         });
 
+        __export__('mouseMove', function(x, y) {
+            if (typeof mouseMove === 'function') {
+                mouseMove(x, y);
+            }
+        });
+
+        __export__('mouseDown', function(x, y, button) {
+            if (typeof mouseDown === 'function') {
+                mouseDown(x, y, button);
+            }
+        });
+
+        __export__('mouseUp', function(x, y, button) {
+            if (typeof mouseUp === 'function') {
+                mouseUp(x, y, button);
+            }
+        });
+
+        __export__('click', function(x, y, button) {
+            if (typeof click === 'function') {
+                click(x, y, button);
+            }
+        });
+
+        __export__('keyDown', function(keyCode) {
+            if (typeof keyDown === 'function') {
+                keyDown(keyCode);
+            }
+        });
+
+        __export__('keyUp', function(keyCode) {
+            if (typeof keyUp === 'function') {
+                keyUp(keyCode);
+            }
+        });
+
+        __export__('keyPress', function(charCode) {
+            if (typeof keyPress === 'function') {
+                keyPress(charCode);
+            }
+        });
+
         // yo dawg etc
         __export__('eval', function(code) {
             try {

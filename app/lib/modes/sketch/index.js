@@ -86,6 +86,39 @@ module.exports = Mode.extend(function(_cs, _cb) {
                 this._ctx.addAPI(new StringAPI());
 
                 //
+                // Canvas Events
+
+                var canvas = this._canvas.getCanvas();
+
+                canvas.addEventListener('mousedown', function(evt) {
+                    self._ctx.__js_mouseDown(evt.offsetX, evt.offsetY, evt.which);
+                });
+
+                canvas.addEventListener('mouseup', function(evt) {
+                    self._ctx.__js_mouseUp(evt.offsetX, evt.offsetY, evt.which); 
+                });
+
+                canvas.addEventListener('mousemove', function(evt) {
+                    self._ctx.__js_mouseMove(evt.offsetX, evt.offsetY, evt.which);
+                });
+
+                canvas.addEventListener('click', function(evt) {
+                    self._ctx.__js_click(evt.offsetX, evt.offsetY, evt.which); 
+                });
+
+                canvas.addEventListener('keydown', function(evt) {
+                    self._ctx.__js_keyDown(evt.keyCode);
+                });
+
+                canvas.addEventListener('keyup', function(evt) {
+                    self._ctx.__js_keyUp(evt.keyCode);
+                });
+
+                canvas.addEventListener('keypress', function(evt) {
+                    self._ctx.__js_keyPress(String.fromCharCode(evt.charCode));
+                });
+
+                //
                 // Evaluation
 
                 function isError(v) {
