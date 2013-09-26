@@ -9,7 +9,8 @@ var CanvasAPI   = lib('apis/canvas'),
 
 var hk          = require('hudkit'),
     esprima     = require('esprima'),
-    escodegen   = require('escodegen');
+    escodegen   = require('escodegen'),
+    beautify    = require('js-beautify').js_beautify;
 
 module.exports = Mode.extend(function(_cs, _cb) {
 
@@ -42,6 +43,10 @@ module.exports = Mode.extend(function(_cs, _cb) {
                     self.reset();
                 }, {title: 'Reset'});
 
+                this._actReformat = hk.action(function() {
+                    self._reformat();
+                }, {title: 'Reformat'});
+
                 //
                 // UI
 
@@ -61,6 +66,7 @@ module.exports = Mode.extend(function(_cs, _cb) {
                 this._toolbar.addAction(this._actStart);
                 this._toolbar.addAction(this._actStop);
                 this._toolbar.addAction(this._actReset);
+                this._toolbar.addAction(this._actReformat);
 
                 outerSplit.setOrientation(hk.SPLIT_PANE_VERTICAL);
                 rightSplit.setOrientation(hk.SPLIT_PANE_HORIZONTAL);
@@ -409,6 +415,20 @@ module.exports = Mode.extend(function(_cs, _cb) {
 
                 this._editor.setValue(code || '');
             
+            },
+
+            _reformat: function() {
+
+                var editor  = this._editor.getEditor(),
+                    src     = editor.getValue();
+
+                try {
+                    var formatted = beautify(src, {indent_size: 4});
+                    editor.setValue(formatted, -1);
+                } catch (e) {
+                    // TODO: alert!
+                }
+
             }
 
         }
