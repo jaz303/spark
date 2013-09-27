@@ -9,7 +9,7 @@ module.exports = API.extend(function(_sc, _sm) {
         },
 
         'methods', {
-            install: function(ctx) {
+            doInstall: function(ctx) {
 
                 var console = this._console;
 

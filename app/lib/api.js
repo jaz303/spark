@@ -6,7 +6,25 @@ module.exports = Class.extend(function(_sc, _sm) {
         function() {},
 
         'methods', {
-            install: function(ctx) {}
+            install: function(ctx) {
+                this._teardown = [];
+                this.doInstall(ctx);
+            },
+
+            doInstall: function(ctx) {},
+            
+            uninstall: function(ctx) {
+                this._teardown.forEach(function(cb) {
+                    cb();
+                })
+            },
+
+            bind: function(el, event, fn) {
+                el.addEventListener(event, fn);
+                this._teardown.push(function() {
+                    el.removeEventListener(event, fn);
+                });
+            }
         }
     ];
 

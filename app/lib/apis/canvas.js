@@ -10,7 +10,7 @@ module.exports = API.extend(function(_sc, _sm) {
         },
 
         'methods', {
-            install: function(c) {
+            doInstall: function(c) {
 
                 function loadIdentity() {
                     ctx.setTransform(1, 0, 0, 1, 0, 0);

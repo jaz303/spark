@@ -7,7 +7,7 @@ module.exports = API.extend(function(_sc, _sm) {
         function() {},
 
         'methods', {
-            install: function(ctx) {
+            doInstall: function(ctx) {
 
                 ctx.constant('E',          Math.E);
                 ctx.constant('LN2',        Math.LN2);

@@ -7,7 +7,7 @@ module.exports = API.extend(function(_sc, _sm) {
         function() {},
 
         'methods', {
-            install: function(ctx) {
+            doInstall: function(ctx) {
 
                 ctx.def('join', {
                     params: ['list:any[]', 'separator:string'],
