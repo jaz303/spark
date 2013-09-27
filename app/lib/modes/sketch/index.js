@@ -1,16 +1,17 @@
-var Mode        = lib('mode'),
-    JSContext   = lib('js_context');
+var Mode            = lib('mode'),
+    JSContext       = lib('js_context');
+    
+var CanvasAPI       = lib('apis/canvas'),
+    ConsoleAPI      = lib('apis/console'),
+    MathAPI         = lib('apis/math'),
+    ColorsAPI       = lib('apis/colors'),
+    StringAPI       = lib('apis/string'),
+    MouseStateAPI   = lib('apis/mouse_state');
 
-var CanvasAPI   = lib('apis/canvas'),
-    ConsoleAPI  = lib('apis/console'),
-    MathAPI     = lib('apis/math'),
-    ColorsAPI   = lib('apis/colors'),
-    StringAPI   = lib('apis/string');
-
-var hk          = require('hudkit'),
-    esprima     = require('esprima'),
-    escodegen   = require('escodegen'),
-    beautify    = require('js-beautify').js_beautify;
+var hk              = require('hudkit'),
+    esprima         = require('esprima'),
+    escodegen       = require('escodegen'),
+    beautify        = require('js-beautify').js_beautify;
 
 module.exports = Mode.extend(function(_cs, _cb) {
 
@@ -90,6 +91,7 @@ module.exports = Mode.extend(function(_cs, _cb) {
                 this._ctx.addAPI(new MathAPI());
                 this._ctx.addAPI(new ColorsAPI());
                 this._ctx.addAPI(new StringAPI());
+                this._ctx.addAPI(new MouseStateAPI(this._canvas.getCanvas()));
 
                 //
                 // Canvas Events
