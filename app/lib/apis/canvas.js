@@ -309,6 +309,33 @@ module.exports = API.extend(function(_sc, _sm) {
                     }
                 });
 
+                c.def('loadImage', {
+                    params: ['url:string'],
+                    docs: "...",
+                    fn: function(url) {
+                        var image = new window.Image();
+                        image.src = url;
+                        return image;
+                    }
+                });
+
+                c.def('drawImage', {
+                    params: ['image:Image', 'x:number', 'y:number'],
+                    docs: "...",
+                    fn: function(image, x, y) {
+                        ctx.drawImage(image, x, y);
+                    }
+                });
+
+                c.def('drawImageCentered', {
+                    params: ['image:Image', 'x:number', 'y:number'],
+                    docs: "...",
+                    fn: function(image, x, y) {
+                        if (!image.width || !image.height) return;
+                        ctx.drawImage(image, x - image.width / 2, y - image.height / 2);   
+                    }
+                });
+
                 //
                 // Transformations
 
