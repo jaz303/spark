@@ -1,8 +1,8 @@
 global.lib = function(lib) { return require('./lib/' + lib); };
 
-var fs      = require('fs'),
-    path    = require('path'),
-    hk      = null; // can't require hudkit before document/window is available
+var hk      = require('hudkit'),
+    fs      = require('fs'),
+    path    = require('path');
 
 var rootPane    = null,
     openFile    = null,
@@ -22,8 +22,6 @@ exports.init = function(window, document) {
 
     global.window = window;
     global.document = document;
-
-    hk = require('hudkit');
 
     rootPane = hk.init();
     
