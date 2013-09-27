@@ -144,7 +144,34 @@ JSContext.prototype.getter = function(name, opts) {
 
 }
 
+JSContext.prototype.destroy = function() {
+    if (this._ctx) {
+        this._uninstallAllAPIs();
+        this._ctx = null;
+    }
+}
+
 JSContext.prototype.reset = function() {
+    this.destroy();
+    this._createJavascriptContext();
+    this._installAllAPIs();
+}
+
+JSContext.prototype.evaluate = function(code) {
+    try {
+        return vm.runInContext(code, this._ctx);
+    } catch (e) {
+        this.onerror.emit('evaluate', e);
+        return undefined;
+    }
+}
+
+JSContext.prototype.addAPI = function(api) {
+    this._apis.push(api);
+    api.install(this);
+}
+
+JSContext.prototype._createJavascriptContext = function() {
 
     var self = this;
 
@@ -167,24 +194,18 @@ JSContext.prototype.reset = function() {
     vm.runInContext('__makeInjector__();', this._ctx);
     this.__js_delete('__makeInjector__');
 
-    for (var i = 0; i < this._apis.length; ++i) {
-        this._apis[i].install(this);
-    }
-
 }
 
-JSContext.prototype.evaluate = function(code) {
-    try {
-        return vm.runInContext(code, this._ctx);
-    } catch (e) {
-        this.onerror.emit('evaluate', e);
-        return undefined;
-    }
+JSContext.prototype._installAllAPIs = function() {
+    this._apis.forEach(function(api) {
+        api.install(this);
+    }, this);
 }
 
-JSContext.prototype.addAPI = function(api) {
-    this._apis.push(api);
-    api.install(this);
+JSContext.prototype._uninstallAllAPIs = function() {
+    this._apis.forEach(function(api) {
+        api.uninstall(this);
+    }, this);
 }
 
 module.exports = JSContext;
