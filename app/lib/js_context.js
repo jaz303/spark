@@ -129,11 +129,17 @@ JSContext.prototype.constant = function(name, value) {
 
 }
 
-JSContext.prototype.getter = function(name, fn) {
+JSContext.prototype.getter = function(name, opts) {
+
+    if (typeof opts === 'function') {
+        opts = { fn: opts };
+    }
+
+    opts.docs = opts.docs || '';
 
     this.__js_defineProperty(name, {
         enumerable  : true,
-        get         : fn
+        get         : opts.fn
     });
 
 }
