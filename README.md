@@ -24,9 +24,14 @@ The canvas context is available via the variable `ctx`. The canvas size can be r
 
 There are a bunch of other Processing-style functions added to sandbox context. Many of these are [documented here](http://jasonframe.co.uk/teaching/gsa-dc/api.php).
 
-## Download
+## Download/Install
 
-  * [Mac](http://jasonframe.co.uk/teaching/gsa-dc/Spark.zip)
+  * [Mac](http://jasonframe.co.uk/downloads/spark/Spark.dmg)
+
+Alternatively, Spark can be installed with `npm` via the `sparkjs-launcher` module:
+
+    $ npm install -g sparkjs-launcher
+    $ sparkjs
 
 ## Hacking
 
