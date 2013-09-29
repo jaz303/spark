@@ -11,8 +11,10 @@ pkg/Spark.app: pkg
 	cat package.json | sed "s/\"toolbar\": true,/\"toolbar\": false,/" > pkg/Spark.app/Contents/Resources/app.nw/package.json
 
 pkg/Spark.dmg: pkg/Spark.app
-	cd pkg
-	hdiutil create Spark.dmg -ov -volname "Spark" -fs HFS+ -srcfolder dmgroot
-
+	rm -rf pkg/dmgroot
+	mkdir pkg/dmgroot
+	mv pkg/Spark.app pkg/dmgroot
+	hdiutil create pkg/Spark.dmg -ov -volname "Spark" -fs HFS+ -format UDZO -srcfolder pkg/dmgroot
+	
 clean:
 	rm -rf pkg
