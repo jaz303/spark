@@ -1,6 +1,6 @@
 {
   "name": "sparkjs",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Javascript sketch-coding environment. Processing with a REPL!",
   "main": "index.html",
   "scripts": {
