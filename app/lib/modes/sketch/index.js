@@ -13,6 +13,20 @@ var hk              = require('hudkit'),
     escodegen       = require('escodegen'),
     beautify        = require('js-beautify').js_beautify;
 
+var SKELETON = [
+    "function setup() {",
+    "",
+    "}",
+    "",
+    "function loop() {",
+    "    clear();",
+    "    save();",
+    "    // sketch code here",
+    "    restore();",
+    "}",
+    ""
+].join("\n");
+
 module.exports = Mode.extend(function(_cs, _cb) {
 
     return [
@@ -82,6 +96,11 @@ module.exports = Mode.extend(function(_cs, _cb) {
 
                 rootPane.setToolbar(this._toolbar);
                 rootPane.setRootWidget(outerSplit);
+
+                //
+                // Skeleton
+
+                this._editor.setValue(SKELETON);
 
                 //
                 // APIs
