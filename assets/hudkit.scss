@@ -86,30 +86,64 @@
 // Widget
 
 .hk-widget {
-    position: absolute;
     overflow: hidden;
     box-sizing: border-box;
+}
+
+.hk-position-manual {
+    position: absolute;
+}
+
+.hk-position-auto {
+    
 }
 
 //
 // Button
 
-.hk-button {
-  @include control-font;
-  @include control-border;
-  background: $HK_BUTTON_BG_COLOR;
-  color: $HK_TEXT_COLOR;
-  padding: 1px 10px 2px 10px;
-  border-radius: 7px;
-  
-  &.disabled {
-      color: #d0d0d0;
-  }
-  
-  &:not(.disabled):active {
-    background: $HK_CONTROL_ACTIVE_BG_COLOR;
-  }
+// .hk-button {
+//   @include control-font;
+//   @include control-border;
+//   background: $HK_BUTTON_BG_COLOR;
+//   color: $HK_TEXT_COLOR;
+//   padding: 1px 10px 2px 10px;
+//   border-radius: 7px;
+//   
+//   &.disabled {
+//       color: #d0d0d0;
+//   }
+//   
+//   &:not(.disabled):active {
+//     background: $HK_CONTROL_ACTIVE_BG_COLOR;
+//   }
+// }
+
+//
+// Button Bar
+
+.hk-button-bar {
+    .hk-button {
+        background-color: $HK_BUTTON_BG_COLOR;
+        display: block;
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        margin: 0 4px 4px 0;
+
+        span {
+            display: none;
+        }
+
+        &.disabled {
+            color: #d0d0d0;
+        }
+        
+        &:not(.disabled):active {
+          background: $HK_CONTROL_ACTIVE_BG_COLOR;
+        }
+    }
 }
+
 
 //
 // Canvas

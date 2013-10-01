@@ -84,21 +84,24 @@ table {
   z-index: 30000; }
 
 .hk-widget {
-  position: absolute;
   overflow: hidden;
   box-sizing: border-box; }
 
-.hk-button {
-  font: 10px Helvetica, sans-serif;
-  line-height: 1;
-  border: 1px solid HK_CONTROL_BORDER_COLOR;
-  background: #929da8;
-  color: #121729;
-  padding: 1px 10px 2px 10px;
-  border-radius: 7px; }
-  .hk-button.disabled {
+.hk-position-manual {
+  position: absolute; }
+
+.hk-button-bar .hk-button {
+  background-color: #929da8;
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  margin: 0 4px 4px 0; }
+  .hk-button-bar .hk-button span {
+    display: none; }
+  .hk-button-bar .hk-button.disabled {
     color: #d0d0d0; }
-  .hk-button:not(.disabled):active {
+  .hk-button-bar .hk-button:not(.disabled):active {
     background: #eaf20f; }
 
 .hk-canvas-2d {
