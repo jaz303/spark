@@ -91,18 +91,21 @@ table {
   position: absolute; }
 
 .hk-button-bar .hk-button {
-  background-color: #929da8;
+  font: 10px Helvetica, sans-serif;
+  line-height: 1;
+  background: #929da8;
+  color: #121729;
   display: block;
   width: 20px;
   height: 20px;
   border-radius: 10px;
   margin: 0 4px 4px 0; }
-  .hk-button-bar .hk-button span {
-    display: none; }
   .hk-button-bar .hk-button.disabled {
     color: #d0d0d0; }
   .hk-button-bar .hk-button:not(.disabled):active {
     background: #eaf20f; }
+  .hk-button-bar .hk-button span {
+    display: none; }
 
 .hk-canvas-2d {
   background-color: #121212;
@@ -317,6 +320,13 @@ table {
   display: block;
   float: left; }
 .hk-toolbar-items > .hk-button {
+  font: 10px Helvetica, sans-serif;
+  line-height: 1;
+  background: #929da8;
+  color: #121729;
   border: 1px solid #a6b5bb;
-  border-radius: 0;
   padding: 3px 3px; }
+  .hk-toolbar-items > .hk-button.disabled {
+    color: #d0d0d0; }
+  .hk-toolbar-items > .hk-button:not(.disabled):active {
+    background: #eaf20f; }

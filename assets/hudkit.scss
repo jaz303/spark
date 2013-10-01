@@ -22,6 +22,26 @@
     border: 1px solid HK_CONTROL_BORDER_COLOR;
 }
 
+@mixin button {
+    @include control-font;
+    
+    background: $HK_BUTTON_BG_COLOR;
+    color: $HK_TEXT_COLOR;
+    
+    &.disabled {
+        color: #d0d0d0;
+    }
+    
+    &:not(.disabled):active {
+      background: $HK_CONTROL_ACTIVE_BG_COLOR;
+    }
+}
+
+@mixin bordered-button {
+    @include button;
+    @include control-border;
+}
+
 //
 // Root
 
@@ -123,7 +143,8 @@
 
 .hk-button-bar {
     .hk-button {
-        background-color: $HK_BUTTON_BG_COLOR;
+        @include button;
+
         display: block;
         width: 20px;
         height: 20px;
@@ -132,14 +153,6 @@
 
         span {
             display: none;
-        }
-
-        &.disabled {
-            color: #d0d0d0;
-        }
-        
-        &:not(.disabled):active {
-          background: $HK_CONTROL_ACTIVE_BG_COLOR;
         }
     }
 }
@@ -469,8 +482,8 @@
     }
     
     > .hk-button {
+        @include button;
         border: 1px solid $HK_TOOLBAR_ITEM_BORDER_COLOR;
-        border-radius: 0;
         padding: ((($HK_TOOLBAR_HEIGHT - $HK_CONTROL_FONT_SIZE) / 2) - 1) 3px;
     }
 }
