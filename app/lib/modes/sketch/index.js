@@ -65,6 +65,30 @@ module.exports = Mode.extend(function(_cs, _cb) {
                 //
                 // UI
 
+                // Docs/Props/Parameters
+
+                var toolSplit = new hk.SplitPane();
+                toolSplit.setOrientation(hk.SPLIT_PANE_HORIZONTAL);
+
+                var documentationBrowser = new hk.Box();
+                documentationBrowser.setBackgroundColor('#AAB2B8');
+
+                var propsBrowser = new hk.Box();
+                propsBrowser.setBackgroundColor('#AAB2B8');
+
+                var parametersViewer = new hk.Box();
+                parametersViewer.setBackgroundColor('#AAB2B8');
+
+                var toolTabs = new hk.TabPane();
+                toolTabs.addTab('Props', propsBrowser);
+                toolTabs.addTab('Parameters', parametersViewer);
+
+                toolSplit.setTopWidget(documentationBrowser);
+                toolSplit.setBottomWidget(toolTabs);
+                toolSplit.setSplit(0.7);
+
+                // Editor/canvas/REPL
+                
                 var outerSplit  = new hk.SplitPane(),
                     rightSplit  = new hk.SplitPane();
 
@@ -94,8 +118,34 @@ module.exports = Mode.extend(function(_cs, _cb) {
                 rightSplit.setBottomWidget(this._console);
                 rightSplit.setSplit(0.7);
 
+                // Pull it all together
+
+                var masterContainer = new hk.Panel();
+                var masterButtons = new hk.ButtonBar();
+
+                var toggleToolsButton = new hk.Button();
+                toggleToolsButton.setAction(hk.action(function() {
+                    masterSplit.toggleWidgetAtIndex(0);
+                }));
+
+                masterButtons.addButton(toggleToolsButton);
+
+                var masterSplit = new hk.SplitPane();
+                masterSplit.setOrientation(hk.SPLIT_PANE_VERTICAL);
+                masterSplit.setLeftWidget(toolSplit);
+                masterSplit.setRightWidget(outerSplit);
+                masterSplit.setSplit(0.32);
+                masterSplit.hideWidgetAtIndex(0);
+
+                masterContainer.addChild('buttons', masterButtons);
+                masterContainer.addChild('split', masterSplit);
+                masterContainer.setLayout(function(c, x, y, width, height) {
+                    c.buttons.setBounds(0, 0, 20, height);
+                    c.split.setBounds(28, 0, width - 28, height);
+                });
+
                 rootPane.setToolbar(this._toolbar);
-                rootPane.setRootWidget(outerSplit);
+                rootPane.setRootWidget(masterContainer);
 
                 //
                 // Skeleton
