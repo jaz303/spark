@@ -120,12 +120,29 @@ module.exports = Mode.extend(function(_cs, _cb) {
 
                 // Pull it all together
 
+                var outerSplitRatioWhenToolsVisible = null;
+                var outerSplitRatioWhenToolsInvisible = null;
+                var toolsVisible = false;
+
                 var masterContainer = new hk.Panel();
                 var masterButtons = new hk.ButtonBar();
 
                 var toggleToolsButton = new hk.Button();
                 toggleToolsButton.setAction(hk.action(function() {
-                    masterSplit.toggleWidgetAtIndex(0);
+                    if (toolsVisible) {
+                        outerSplitRatioWhenToolsVisible = outerSplit.getSplit();
+                        masterSplit.hideWidgetAtIndex(0);
+                        if (outerSplitRatioWhenToolsInvisible !== null) {
+                            outerSplit.setSplit(outerSplitRatioWhenToolsInvisible);
+                        }
+                    } else {
+                        outerSplitRatioWhenToolsInvisible = outerSplit.getSplit();
+                        masterSplit.showWidgetAtIndex(0);
+                        if (outerSplitRatioWhenToolsVisible !== null) {
+                            outerSplit.setSplit(outerSplitRatioWhenToolsVisible);
+                        }
+                    }
+                    toolsVisible = !toolsVisible;
                 }));
 
                 masterButtons.addButton(toggleToolsButton);
