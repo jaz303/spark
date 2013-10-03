@@ -178,6 +178,7 @@ module.exports = Mode.extend(function(_cs, _cb) {
                 this._ctx.addAPI(new ColorsAPI());
                 this._ctx.addAPI(new StringAPI());
                 this._ctx.addAPI(new MouseStateAPI(this._canvas.getCanvas()));
+                this._installAPIs();
 
                 //
                 // Canvas Events
@@ -487,6 +488,7 @@ module.exports = Mode.extend(function(_cs, _cb) {
                 this.stop();
                 this._elapsedMillis = 0;
                 this._ctx.reset();
+                this._installAPIs();
                 this._ctx.evaluate(this._editor.getValue());
                 this._ctx.__js_setup();
             },
@@ -519,6 +521,25 @@ module.exports = Mode.extend(function(_cs, _cb) {
                 } catch (e) {
                     // TODO: alert!
                 }
+
+            },
+
+            _installAPIs: function() {
+
+                //
+                // First some core stuff
+
+                var self = this;
+
+                this._ctx.getter('elapsedMillis', {
+                    docs: 'The total time that the sketch has been running, in milliseconds',
+                    fn: function() { return self._elapsedMillis; }
+                });
+
+                //
+                // Next add the optional APIs
+
+                // TODO ... (refactor)
 
             }
 
