@@ -15,7 +15,8 @@
     "hudkit": "0.0.9",
     "esprima": "~1.0.4",
     "escodegen": "0.0.27",
-    "js-beautify": "~1.4.0"
+    "js-beautify": "~1.4.0",
+    "slowpoke": "0.0.1"
   },
   "window": {
     "title": "Spark",
