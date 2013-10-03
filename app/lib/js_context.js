@@ -15,10 +15,10 @@ var builtins = {
             delete global[key];
         });
         
-        __export__('loop', function() {
+        __export__('loop', function(dt, tt) {
             if (typeof loop === 'function') {
                 try {
-                    loop();
+                    loop(dt, tt);
                 } catch (e) {
                     __error__('loop', e);
                 }

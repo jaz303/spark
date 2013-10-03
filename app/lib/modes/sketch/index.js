@@ -18,7 +18,7 @@ var SKELETON = [
     "",
     "}",
     "",
-    "function loop() {",
+    "function loop(delta, totalTime) {",
     "    clear();",
     "    save();",
     "    // sketch code here",
@@ -425,6 +425,7 @@ module.exports = Mode.extend(function(_cs, _cb) {
                 // State
 
                 this._running = false;
+                this._elapsedMillis = 0;
                 
                 //
                 // And away we go...
@@ -445,26 +446,27 @@ module.exports = Mode.extend(function(_cs, _cb) {
 
                 this._running = true;
 
-                var self = this,
-                    ctx = this._ctx;
-
-                // var lastSecond = Date.now(),
-                //     frameCount = 0;
+                var self        = this,
+                    ctx         = this._ctx;
+                
+                // force initial reference point to be ~1 frame behind
+                // time at which next tick will execute. this ensures
+                // that dt > 0.
+                var lastFrame   = Date.now() - Math.floor(1000 / 60);
 
                 window.requestAnimationFrame(function tick() {
                     
                     if (!self._running)
                         return;
 
-                    // frameCount++;
-                    // var now = Date.now();
-                    // if (now - lastSecond > 1000) {
-                    //     console.log("FPS: " + frameCount);
-                    //     lastSecond = now;
-                    //     frameCount = 0;
-                    // }
-                    
-                    ctx.__js_loop();
+                    var now     = Date.now(),
+                        delta   = now - lastFrame;
+
+                    self._elapsedMillis += delta;
+
+                    ctx.__js_loop(delta, self._elapsedMillis);
+
+                    lastFrame = now;
                 
                     window.requestAnimationFrame(tick);
 
@@ -483,6 +485,7 @@ module.exports = Mode.extend(function(_cs, _cb) {
 
             reset: function() {
                 this.stop();
+                this._elapsedMillis = 0;
                 this._ctx.reset();
                 this._ctx.evaluate(this._editor.getValue());
                 this._ctx.__js_setup();
