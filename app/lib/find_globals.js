@@ -23,11 +23,7 @@ function findGlobals(ast) {
     var variables = [], functions = [];
 
     for (var k in symbols) {
-        if (symbols[k] === 'variable') {
-            variables.push(k);
-        } else {
-            functions.push(k);
-        }
+        (symbols[k] === 'variable' ? variables : functions).push(k);
     }
 
     return {
