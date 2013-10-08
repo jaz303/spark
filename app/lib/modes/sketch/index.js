@@ -1,5 +1,6 @@
 var Mode            = lib('mode'),
-    JSContext       = lib('js_context');
+    JSContext       = lib('js_context'),
+    findGlobals     = lib('find_globals');
     
 var CanvasAPI       = lib('apis/canvas'),
     ConsoleAPI      = lib('apis/console'),
@@ -238,7 +239,15 @@ module.exports = Mode.extend(function(_cs, _cb) {
                         try {
 
                             var ast = esprima.parse(code);
+
+                            // find globals
+                            var globals = findGlobals(ast);
+
+                            // detect slow loops
+                            // TODO: make this a configuration option
                             slowpoke(ast, {timeout: 5000});
+
+                            // regenerate code
                             code = escodegen.generate(ast);
 
                         } catch (e) {
