@@ -12,13 +12,13 @@
     <key>CFBundleDocumentTypes</key>
     <array>
         <dict>
-            <!--<key>CFBundleTypeIconFile</key>
-            <string>nw.icns</string>-->
+            <key>CFBundleTypeIconFile</key>
+            <string>nw.icns</string>
 
-            <!--<key>LSItemContentTypes</key>
+            <key>LSItemContentTypes</key>
             <array>
-                <string>com.intel.nw.app</string>
-            </array>-->
+                <string>uk.co.jasonframe.spark.project</string>
+            </array>
 
             <key>CFBundleTypeName</key>
             <string>Spark Project</string>
@@ -78,29 +78,34 @@
     <key>UTExportedTypeDeclarations</key>
     <array>
         <dict>
+            
             <key>UTTypeConformsTo</key>
             <array>
-                <string>com.pkware.zip-archive</string>
+                <string>com.apple.package</string>
             </array>
+            
             <key>UTTypeDescription</key>
-            <string>node-webkit App</string>
+            <string>Spark Project</string>
+            
             <key>UTTypeIconFile</key>
             <string>nw.icns</string>
+
             <key>UTTypeIdentifier</key>
-            <string>com.intel.nw.app</string>
+            <string>uk.co.jasonframe.spark.project</string>
+
+            <!--
             <key>UTTypeReferenceURL</key>
             <string>https://github.com/rogerwang/node-webkit/wiki/How-to-package-and-distribute-your-apps</string>
+            -->
+
             <key>UTTypeTagSpecification</key>
             <dict>
-                <key>com.apple.ostype</key>
-                <string>node-webkit</string>
                 <key>public.filename-extension</key>
                 <array>
-                    <string>nw</string>
+                    <string>spark</string>
                 </array>
-                <key>public.mime-type</key>
-                <string>application/x-node-webkit-app</string>
             </dict>
+
         </dict>
     </array>
 
