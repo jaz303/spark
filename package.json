@@ -16,7 +16,8 @@
     "esprima": "~1.0.4",
     "escodegen": "0.0.27",
     "js-beautify": "~1.4.0",
-    "slowpoke": "0.0.5"
+    "slowpoke": "0.0.5",
+    "userhome": "~0.1.0"
   },
   "window": {
     "title": "Spark",

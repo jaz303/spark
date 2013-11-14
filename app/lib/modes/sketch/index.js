@@ -9,6 +9,9 @@ var CanvasAPI       = lib('apis/canvas'),
     StringAPI       = lib('apis/string'),
     MouseStateAPI   = lib('apis/mouse_state');
 
+var fs              = require('fs'),
+    path            = require('path');
+
 var hk              = require('hudkit'),
     slowpoke        = require('slowpoke'),
     esprima         = require('esprima'),
@@ -29,19 +32,123 @@ var SKELETON = [
     ""
 ].join("\n");
 
-module.exports = Mode.extend(function(_cs, _cb) {
+module.exports = Mode.extend(function(_sc, _cm) {
 
     return [
 
         function() {
-
+            _sc.call(this);
         },
 
         'methods', {
 
+            //
+            // ID
+
             id: 'sketch',
 
-            setup: function(rootPane) {
+            new: function() {
+                this._sourceFiles = ['main.js'];
+                this._initialSource = {'main.js': SKELETON};
+            },
+
+            _getState: function() {
+                return {source: this._sourceFiles};
+            },
+
+            _setState: function(state) {
+
+                if (!Array.isArray(state.source)) {
+                    throw new Error("no source file(s) found");
+                    return;
+                }
+
+                this._sourceFiles = state.source;
+
+            },
+
+            _loadState: function(projectPath, cb) {
+
+                var self        = this,
+                    wasError    = false,
+                    remain      = this._sourceFiles.length;
+
+                if (remain === 0) {
+                    this._sourceFiles = ['main.js'];
+                    this._initialSource = {'main.js': ''};
+                    process.nextTick(cb);
+                    return;
+                }
+
+                this._initialSource = {};
+
+                this._sourceFiles.forEach(function(file) {
+                    fs.readFile(path.join(projectPath, file), {encoding: 'utf8'}, function(err, src) {
+
+                        if (wasError)
+                            return;
+
+                        if (err) {
+                            wasError = true;
+                            cb(err);
+                            return;
+                        }
+
+                        self._initialSource[file] = src;
+
+                        if (--remain === 0) {
+                            cb();
+                        }
+                    
+                    });
+                });
+
+            },
+
+            _saveState: function(projectPath, oldProjectPath, cb) {
+
+                var self        = this,
+                    wasError    = false,
+                    remain      = this._sourceFiles.length;
+
+                if (remain === 0) {
+                    process.nextTick(cb);
+                    return;
+                }
+
+                this._sourceFiles.forEach(function(file) {
+
+                    // Just use the same source for all atm because we really
+                    // only support a single file :)
+                    var fileSource = self._editor.getValue();
+
+                    fs.writeFile(path.join(projectPath, file), fileSource, {encoding: 'utf8'}, function(err, src) {
+
+                        if (wasError)
+                            return;
+
+                        if (err) {
+                            wasError = true;
+                            cb(err);
+                            return;
+                        }
+
+                        if (--remain === 0) {
+                            cb();
+                        }
+
+                    });
+
+                });
+
+            },
+
+            //
+            //
+
+            setup: function(ui) {
+
+                var rootPane = ui.rootPane;
 
                 var self = this;
 
@@ -169,7 +276,8 @@ module.exports = Mode.extend(function(_cs, _cb) {
                 //
                 // Skeleton
 
-                this._editor.setValue(SKELETON);
+                this._editor.setValue(this._initialSource[this._sourceFiles[0]]);
+                this._initialSource = null;
 
                 //
                 // APIs
@@ -387,23 +495,6 @@ module.exports = Mode.extend(function(_cs, _cb) {
                 this._ctx.__js_setup();
             },
 
-            getState: function() {
-                return {
-                    code: this._editor.getValue().split("\n")
-                };
-            },
-
-            setState: function(state) {
-
-                var code = state.code;
-                if (Array.isArray(code)) {
-                    code = code.join("\n");
-                }
-
-                this._editor.setValue(code || '');
-            
-            },
-
             _reformat: function() {
 
                 var editor  = this._editor.getEditor(),
@@ -435,7 +526,7 @@ module.exports = Mode.extend(function(_cs, _cb) {
 
                 // TODO ... (refactor)
 
-            }
+            },
 
         }
 
