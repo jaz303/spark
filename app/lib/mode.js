@@ -91,7 +91,34 @@ module.exports = Class.extend(function(_sc, _sm) {
 
             save: function(path, oldPath, cb) {
 
-                var self = this;
+                var self = this, stat, newDir = false;
+
+                try {
+                    stat = fs.statSync(path);
+                    if (!stat.isDirectory()) {
+                        cb(new Error("not a directory: " + path));
+                        return;
+                    }
+                } catch (e) {
+                    try {
+                        fs.mkdirSync(path);
+                        newDir = true;
+                    } catch (e) {
+                        cb(new Error("couldn't create project directory: " + path));
+                    }
+                }
+
+                if (!newDir) {
+                    try {
+                        stat = fs.statSync(pio.projectFile(path));
+                        if (!stat.isFile()) {
+                            throw "boom";
+                        }
+                    } catch (e) {
+                        cb(new Error("not a spark project: " + path));
+                        return;
+                    }
+                }
 
                 var state = this._getState();
                 state.mode = this.id;
